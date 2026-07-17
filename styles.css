@@ -1,0 +1,512 @@
+/* ==========================================================
+   DESIGN TOKENS — edit these to reskin the whole site
+   ========================================================== */
+:root {
+  /* Color: sampled directly from the Prevailing In Christ Ministries crest —
+     shield maroon, sword gold, and the navy/green ribbon beneath the cross */
+  --ink:        #4A1216;   /* deep crest maroon (hero, footer, rhythm bg) */
+  --ink-soft:   #5C171C;   /* slightly lighter maroon panel */
+  --parchment:  #FBF6EC;   /* open-bible page tone — light section background */
+  --parchment-2:#F1E6D2;   /* card / alt light background */
+  --cream-text: #F6ECDD;   /* body text on maroon */
+  --charcoal:   #241512;   /* body text on light */
+  --gold:       #C9A94A;   /* sword-hilt gold — primary accent */
+  --gold-dim:   #8D7638;   /* muted gold for borders/lines */
+  --navy:       #171B6E;   /* ribbon navy */
+  --green:      #2F7A1E;   /* ribbon green */
+  --brick:      #171B6E;   /* Give section — reuses ribbon navy for contrast against maroon */
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  --container: 1180px;
+  --arch-radius: 120px 120px 0 0;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--charcoal);
+  background: var(--parchment);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+h1, h2, h3 { font-family: var(--font-display); margin: 0; font-weight: 500; }
+p { margin: 0; }
+ol, ul { list-style: none; margin: 0; padding: 0; }
+img { max-width: 100%; display: block; }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+.eyebrow--dark { color: var(--gold-dim); }
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 1.8rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: 1px solid transparent;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn--solid { background: var(--gold); color: var(--ink); }
+.btn--solid:hover { background: #d6ae6c; }
+.btn--solid.btn--light { background: var(--parchment); color: var(--ink); }
+.btn--ghost { border-color: rgba(244,239,226,0.35); color: var(--cream-text); }
+.btn--ghost:hover { border-color: var(--gold); color: var(--gold); }
+.btn--outline { border-color: var(--gold-dim); color: var(--charcoal); }
+.btn--outline:hover { border-color: var(--gold); background: rgba(201,161,92,0.08); }
+
+/* ==========================================================
+   RIBBON BAR — signature detail lifted from the crest's
+   navy / white / green ribbon beneath the cross
+   ========================================================== */
+.ribbon-bar {
+  display: flex;
+  height: 5px;
+  width: 100%;
+}
+.ribbon-bar span { flex: 1; }
+.ribbon-bar span:nth-child(1) { background: var(--navy); }
+.ribbon-bar span:nth-child(2) { background: var(--parchment); }
+.ribbon-bar span:nth-child(3) { background: var(--green); }
+
+/* ==========================================================
+   NAV
+   ========================================================== */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: linear-gradient(to bottom, rgba(15,27,22,0.85), rgba(15,27,22,0));
+  padding: 1.4rem 0;
+}
+.nav__inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.nav__logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--parchment);
+  padding: 3px;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px rgba(201,169,74,0.5);
+}
+.nav__mark {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--cream-text);
+  font-style: italic;
+}
+.nav__mark span { color: var(--gold); font-style: normal; }
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: 2.2rem;
+}
+.nav__links a {
+  color: var(--cream-text);
+  font-size: 0.92rem;
+}
+.nav__links a:not(.nav__cta):hover { color: var(--gold); }
+.nav__cta {
+  background: var(--gold);
+  color: var(--ink) !important;
+  padding: 0.55rem 1.3rem;
+  border-radius: 999px;
+}
+.nav__toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+.nav__toggle span { width: 22px; height: 2px; background: var(--cream-text); }
+
+/* ==========================================================
+   HERO
+   ========================================================== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: var(--ink);
+  overflow: hidden;
+  padding: 8rem 1.5rem 4rem;
+}
+.hero__slides {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  overflow: hidden;
+}
+.hero__slide {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.6s ease;
+}
+.hero__slide.is-active { opacity: 1; }
+.hero__slides::after {
+  /* maroon wash so text stays legible over any photo */
+  content: "";
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: linear-gradient(180deg, rgba(74,18,22,0.75) 0%, rgba(74,18,22,0.55) 45%, rgba(74,18,22,0.92) 100%);
+}
+.hero__dots {
+  position: absolute;
+  bottom: 2.2rem;
+  right: 2rem;
+  z-index: 2;
+  display: flex;
+  gap: 0.5rem;
+}
+.hero__dots span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(246,236,221,0.35);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.hero__dots span.is-active { background: var(--gold); transform: scale(1.25); }
+.hero__glow {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 900px;
+  height: 900px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(201,169,74,0.3) 0%, rgba(201,169,74,0.06) 45%, transparent 70%);
+  animation: flicker 8s ease-in-out infinite;
+}
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.75; }
+}
+.hero__content { position: relative; z-index: 2; max-width: 760px; }
+.hero__title {
+  font-size: clamp(2.6rem, 6vw, 4.6rem);
+  line-height: 1.05;
+  color: var(--cream-text);
+  letter-spacing: -0.01em;
+}
+.hero__sub {
+  color: rgba(244,239,226,0.75);
+  font-size: 1.15rem;
+  max-width: 520px;
+  margin: 1.6rem auto 2.4rem;
+  line-height: 1.6;
+}
+.hero__actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.hero__scroll {
+  position: absolute;
+  bottom: 2.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(244,239,226,0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ==========================================================
+   ABOUT / PILLARS
+   ========================================================== */
+.section__head {
+  max-width: 680px;
+  margin: 0 auto 3.5rem;
+  padding: 0 1.5rem;
+  text-align: center;
+}
+.section__head h2 {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  line-height: 1.15;
+}
+.section__lede {
+  margin-top: 1.2rem;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #4a473d;
+}
+.about { padding: 7rem 0 6rem; }
+
+.pillars {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.pillar {
+  background: var(--parchment-2);
+  border-radius: 4px 4px 60px 4px;
+  padding: 2.4rem 2rem;
+  border-left: 2px solid var(--gold);
+}
+.pillar__mark {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+}
+.pillar h3 {
+  font-size: 1.3rem;
+  margin: 0.9rem 0 0.6rem;
+}
+.pillar p { color: #4a473d; line-height: 1.6; font-size: 0.98rem; }
+
+/* ==========================================================
+   RHYTHM (signature weekly strip — arch-topped panel)
+   ========================================================== */
+.rhythm {
+  background: var(--ink);
+  border-radius: var(--arch-radius);
+  margin: 0 1.2rem;
+  padding: 5rem 1.5rem 4rem;
+}
+.section__head--light h2 { color: var(--cream-text); }
+.section__head--light .eyebrow { color: var(--gold); }
+
+.rhythm__strip {
+  max-width: var(--container);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(244,239,226,0.12);
+  border: 1px solid rgba(244,239,226,0.12);
+}
+.rhythm__day {
+  background: var(--ink);
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.rhythm__day--feature { background: var(--ink-soft); }
+.rhythm__label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+}
+.rhythm__time {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--gold);
+}
+.rhythm__name { color: var(--cream-text); font-size: 0.95rem; line-height: 1.4; }
+.rhythm__link { color: var(--gold); font-size: 0.85rem; margin-top: 0.3rem; }
+.rhythm__link:hover { text-decoration: underline; }
+.rhythm__foot {
+  text-align: center;
+  margin-top: 3rem;
+  color: rgba(244,239,226,0.6);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+.rhythm__foot a { color: var(--gold); }
+
+/* ==========================================================
+   SERMONS (split panel)
+   ========================================================== */
+.sermons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: var(--container);
+  margin: 6rem auto;
+  align-items: stretch;
+  gap: 3rem;
+  padding: 0 1.5rem;
+}
+.sermons__photo {
+  background: url('images/worship-4.jpg') center/cover;
+  border-radius: 4px 60px 4px 4px;
+  min-height: 360px;
+}
+.sermons__content { display: flex; flex-direction: column; justify-content: center; }
+.sermons__content h2 { font-size: clamp(1.9rem, 3.5vw, 2.5rem); line-height: 1.15; margin-bottom: 1.2rem; }
+.sermons__content p { color: #4a473d; line-height: 1.7; margin-bottom: 1.8rem; max-width: 440px; }
+
+/* ==========================================================
+   GIVE
+   ========================================================== */
+.give {
+  background: var(--brick);
+  padding: 6rem 1.5rem;
+  text-align: center;
+}
+.give__inner { max-width: 560px; margin: 0 auto; }
+.give .eyebrow { color: #f0d8c8; }
+.give h2 { color: var(--cream-text); font-size: clamp(1.9rem, 4vw, 2.6rem); margin-bottom: 1rem; }
+.give p { color: rgba(244,239,226,0.85); line-height: 1.6; margin-bottom: 2rem; }
+
+/* ==========================================================
+   VISIT CTA
+   ========================================================== */
+.visit {
+  text-align: center;
+  padding: 7rem 1.5rem;
+}
+.visit h2 { font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 0.8rem; }
+.visit p { color: #4a473d; font-size: 1.1rem; margin-bottom: 2.2rem; }
+.visit .btn--ghost { border-color: var(--gold-dim); color: var(--charcoal); }
+.visit .btn--ghost:hover { border-color: var(--gold); color: var(--gold-dim); background: rgba(201,161,92,0.08); }
+
+/* ==========================================================
+   FOOTER
+   ========================================================== */
+.footer {
+  background: var(--ink);
+  color: rgba(244,239,226,0.8);
+  padding: 5rem 1.5rem 2rem;
+  border-radius: var(--arch-radius);
+  margin: 0 1.2rem 1.2rem;
+}
+.footer__grid {
+  max-width: var(--container);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+  gap: 2.5rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(244,239,226,0.12);
+}
+.nav__mark--footer { margin-bottom: 1rem; }
+.footer__brand p { margin-bottom: 0.4rem; font-size: 0.92rem; }
+.footer__brand a:hover { color: var(--gold); }
+.footer__col h4 {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 1.1rem;
+  font-weight: 500;
+}
+.footer__col a, .footer__col p { display: block; margin-bottom: 0.7rem; font-size: 0.92rem; }
+.footer__col a:hover { color: var(--gold); }
+.footer__form { display: flex; margin-bottom: 1.2rem; }
+.footer__form input {
+  flex: 1;
+  background: var(--ink-soft);
+  border: 1px solid rgba(244,239,226,0.15);
+  border-radius: 4px 0 0 4px;
+  padding: 0.7rem 0.9rem;
+  color: var(--cream-text);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+}
+.footer__form input:focus { outline: 2px solid var(--gold); outline-offset: -2px; }
+.footer__form button {
+  background: var(--gold);
+  border: none;
+  border-radius: 0 4px 4px 0;
+  padding: 0 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--ink);
+}
+.footer__socials { display: flex; gap: 0.9rem; }
+.footer__socials a {
+  width: 34px; height: 34px;
+  border: 1px solid rgba(244,239,226,0.2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+}
+.footer__socials a:hover { border-color: var(--gold); color: var(--gold); }
+.footer__bottom {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding-top: 1.6rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+.footer__bottom div { display: flex; gap: 1.4rem; }
+.footer__bottom a:hover { color: var(--gold); }
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+@media (max-width: 900px) {
+  .pillars { grid-template-columns: 1fr; }
+  .sermons { grid-template-columns: 1fr; }
+  .rhythm__strip { grid-template-columns: repeat(2, 1fr); }
+  .footer__grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 720px) {
+  .nav__links {
+    position: fixed;
+    top: 0; right: 0;
+    height: 100vh;
+    width: 78%;
+    max-width: 320px;
+    background: var(--ink);
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+  }
+  .nav__links.is-open { transform: translateX(0); }
+  .nav__toggle { display: flex; }
+  .rhythm__strip { grid-template-columns: 1fr; }
+  .footer__grid { grid-template-columns: 1fr; }
+  .footer__bottom { flex-direction: column; }
+}
+
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
