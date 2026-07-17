@@ -98,7 +98,7 @@ img { max-width: 100%; display: block; }
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  background: linear-gradient(to bottom, rgba(15,27,22,0.85), rgba(15,27,22,0);
+  background: linear-gradient(to bottom, rgba(15,27,22,0.85), rgba(15,27,22,0));
   padding: 1.4rem 0;
 }
 .nav__inner {
@@ -307,8 +307,7 @@ img { max-width: 100%; display: block; }
    ========================================================== */
 .rhythm {
   background: var(--ink);
-  border-radius: var(--arch-radius);
-  margin: 0 1.2rem;
+  margin: 0;
   padding: 5rem 1.5rem 4rem;
 }
 .section__head--light h2 { color: var(--cream-text); }
@@ -409,7 +408,7 @@ img { max-width: 100%; display: block; }
   color: rgba(244,239,226,0.8);
   padding: 5rem 1.5rem 2rem;
   border-radius: var(--arch-radius);
-  margin: 0 1.2rem 1.2rem;
+  margin: 0;
 }
 .footer__grid {
   max-width: var(--container);
